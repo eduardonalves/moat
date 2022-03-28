@@ -9,7 +9,6 @@ Angular for front-end<br />
 
 -----------------------------------------------------------------------
 Instalation:<br />
-
 1)Clone this repository.<br />
 2) In back-end folder, run this command to download dependencies:<br />
 	$ composer update <br />
