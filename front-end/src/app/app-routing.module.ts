@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AlbumComponent } from './album/album.component';
 import { ArtistComponent } from './artist/artist.component';
+import { ArtistViewComponent } from './artist/artist-view/artist-view.component';
 import { Role } from './role.model';
 import { AuthGuard } from './auth-guard.helper';
 import { AlbumAddComponent } from './album/album-add/album-add.component';
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'album/edit/:id', component: AlbumEditComponent, canActivate: [AuthGuard] },
   { path: 'album/view/:id', component: AlbumViewComponent, canActivate: [AuthGuard] },
   { path: 'artist', component: ArtistComponent, canActivate: [AuthGuard] },
+  { path: 'artist/view/:id', component: ArtistViewComponent, canActivate: [AuthGuard] },
    // otherwise redirect to home
    { path: '**', redirectTo: 'login' }
 ];

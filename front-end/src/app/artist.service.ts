@@ -24,4 +24,18 @@ export class ArtistService {
     })
     return this.http.get<Object[]>(`${environment.apiUrl}/api/artists/list`, { headers: headers })
   }
+
+  view(id:any): Observable<any> {
+    let user = JSON.parse(localStorage.getItem('user') || '');
+    let auth_token ='';
+    if (typeof user.access_token != 'undefined'){
+      auth_token= user.access_token
+    }   
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${auth_token}`
+    });
+    return this.http.get<Object[]>(`${environment.apiUrl}/api/artists/${id}`, { headers: headers })
+  }
 }

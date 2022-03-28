@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
                     this.loading= false;
                     //this.router.navigateByUrl(returnUrl);
-                    this.router.navigate(['/album']);
+                    this.router.navigate(['/artist']);
                 },
                 error: error => {
                     this.error = error;

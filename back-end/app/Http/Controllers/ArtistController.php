@@ -34,10 +34,13 @@ class ArtistController extends Controller
     {
         $user = $request->user();
         if ($this->isAdmin($user) || $this->isUser($user)) {
-            $post = DB::table('artist')->where('id', $id)->first();
-            if (!empty($post)) {
+            
+            $artist = Artist::with('albums')->get()->where('id', $id)->first();
+            return response()->json($artist,200);
+            //$post = DB::table('artists')->where('id', $id)->first();
+            /*if (!empty($post)) {
                 return $this->onSuccess($post, 'Artist Retrieved');
-            }
+            }*/
             return $this->onError(404, 'Artist Not Found');
         }
         return $this->onError(401, 'Unauthorized Access');

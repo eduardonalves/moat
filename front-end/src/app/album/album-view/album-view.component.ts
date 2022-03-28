@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ArtistService } from 'src/app/artist.service';
 import { FormGroup, FormControl,Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { Album } from 'src/app/album.model';
 import { AlbumService } from 'src/app/album.service';
 
