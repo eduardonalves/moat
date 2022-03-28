@@ -1,0 +1,40 @@
+<div class="card">
+    <h4 class="card-header">Create Album </h4>
+    <div class="card-body">
+        <form [formGroup]="formAlbum" >
+            <div class="form-group">
+                <label for="full_name">Album Name *</label>
+                <input type="text" formControlName="album_name" class="form-control"  />
+                <div class="invalid-feedback">
+                    <div >Album Name</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="username">Year *</label>
+                <input type="number" formControlName="year" class="form-control" maxlength="4"  />
+                <div class="invalid-feedback">
+                    <div >Year is required</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Artist *</label>
+                
+                <select name="artist_id" id="artist_id" formControlName="artist_id" class="form-control">
+                    <option *ngFor="let item of artists" value="{{item.id}}" >{{item.name}}</option>    
+                </select>
+
+                <div  class="invalid-feedback">
+                    <div >Artist is required</div>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <button  class="btn btn-primary" (click)="save();" >
+                    <span class="spinner-border spinner-border-sm mr-1"  *ngIf="loading" ></span>
+                    Save
+                </button>
+                <a routerLink="/album" class="btn btn-link">Back</a>
+            </div>
+        </form>
+    </div>
+  </div>

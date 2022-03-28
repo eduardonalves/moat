@@ -25,6 +25,7 @@ export class LoginService {
               // store user details and jwt token in local storage to keep user logged in between page refreshes
               localStorage.setItem('user', JSON.stringify(user));
               this.userSubject.next(user);
+              //this.router.navigate(['/album']);
               return user;
           }));
   }

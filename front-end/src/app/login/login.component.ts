@@ -64,8 +64,8 @@ export class LoginComponent implements OnInit {
                     // get return url from query parameters or default to home page
                     const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
                     this.loading= false;
-                    this.router.navigateByUrl(returnUrl);
-                    
+                    //this.router.navigateByUrl(returnUrl);
+                    this.router.navigate(['/album']);
                 },
                 error: error => {
                     this.error = error;

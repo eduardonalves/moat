@@ -30,4 +30,17 @@ class ArtistController extends Controller
 
         return $this->onError(401, 'Unauthorized Access');
     }
+    public function view(Request $request, $id): JsonResponse
+    {
+        $user = $request->user();
+        if ($this->isAdmin($user) || $this->isUser($user)) {
+            $post = DB::table('artist')->where('id', $id)->first();
+            if (!empty($post)) {
+                return $this->onSuccess($post, 'Artist Retrieved');
+            }
+            return $this->onError(404, 'Artist Not Found');
+        }
+        return $this->onError(401, 'Unauthorized Access');
+    }
+
 }

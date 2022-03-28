@@ -12,7 +12,11 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ArtistComponent } from './artist/artist.component';
-import { AlbumComponent } from './album/album.component'; 
+import { AlbumComponent } from './album/album.component';
+
+import { AlbumAddComponent } from './album/album-add/album-add.component';
+import { AlbumEditComponent } from './album/album-edit/album-edit.component';
+import { AlbumViewComponent } from './album/album-view/album-view.component'; 
 
 @NgModule({
   declarations: [
@@ -20,7 +24,11 @@ import { AlbumComponent } from './album/album.component';
     LoginComponent,
     RegisterComponent,
     ArtistComponent,
-    AlbumComponent
+    AlbumComponent,
+    
+    AlbumAddComponent,
+         AlbumEditComponent,
+         AlbumViewComponent
   ],
   imports: [
     BrowserModule,
