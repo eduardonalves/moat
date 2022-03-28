@@ -17,10 +17,8 @@ Instalation:<br />
 4)  Change database information in .env file configuration.<br />
 5) Run this command to make migration:<br />
 	$ php artisan migrate <br />
-
 6) Run this command to run the back-end application:<br />
-	$ php artisan serve <br />
-	
+	$ php artisan serve <br />	
 7) In front-end folder, run this command to download dependencies:<br />
 	$ npm install<br />
 8)Run this command to run the front-end application:<br />
