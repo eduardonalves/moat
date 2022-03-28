@@ -1,0 +1,32 @@
+<div class="card">
+  <h4 class="card-header">Login</h4>
+  <div class="card-body">
+      <form [formGroup]="formUser">
+        
+          <div class="form-group">
+              <label for="username" >Username</label>
+              <input type="text" formControlName="username" name="username" class="form-control"   />
+              <div class="invalid-feedback">
+                  <div >Username is required</div>
+              </div>
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" formControlName="password"  name="password" class="form-control" />
+              <div  class="invalid-feedback">
+                  <div >Password is required</div>
+              </div>
+          </div>
+          <br />
+          <p class="text-white bg-danger" *ngIf="error">Sorry, we couldn't find an account with this username. Please check you're using the right username and try again.</p>
+          <p class="text-white bg-danger" *ngIf="error_fields">Please, enter username and password!</p>
+          <div class="form-group">
+              <button  class="btn btn-primary" (click)="validateLogin();">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                  Login
+              </button>
+              <a routerLink="../register" class="btn btn-link">Register</a>
+          </div>
+      </form>
+  </div>
+</div>
