@@ -8,7 +8,9 @@ trait ApiHelpers
 {
     protected function isAdmin($user): bool
     {
-        if (!empty($user)) {
+        $role = auth()->user($user)->role;
+        
+        if ($role == 1) {
             return $user->tokenCan('admin');
         }
 
@@ -17,8 +19,9 @@ trait ApiHelpers
 
     protected function isUser($user): bool
     {
+        $role = auth()->user($user)->role;
 
-        if (!empty($user)) {
+        if ($role == 2) {
             return $user->tokenCan('user');
         }
 
@@ -40,30 +43,5 @@ trait ApiHelpers
             'status' => $code,
             'message' => $message,
         ], $code);
-    }
-
-    protected function albumValidationRules(): array
-    {
-        return [
-            'album_name' => 'required|string',
-            'year' => 'required|string',
-            'artist_id' => 'required|integer',
-        ];
-    }
-
-    protected function artistValidationRules(): array
-    {
-        return [
-            'name' => 'required|string',
-        ];
-    }
-
-    protected function userValidatedRules(): array
-    {
-        return [
-            'full_name' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'username', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ];
     }
 }

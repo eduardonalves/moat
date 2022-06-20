@@ -12,15 +12,8 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        
-        /*$validatedData = $request->validate([
-            'full_name' =>
-            'required|string|max:255',
-            'role' =>
-            'required|integer',
-            'username' => 'required|string|max:255|unique:users',
-            'password' => 'required|string|min:8',
-        ]);*/
+
+
         $validator = Validator::make($request->all(), [
             'full_name' =>
             'required|string|max:255',
@@ -31,45 +24,36 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-    
-            //pass validator errors as errors object for ajax response
+            return response()->json(['errors' => $validator->errors()], 400);
+        }
 
-            return response()->json(['errors'=>$validator->errors()]);
+        $validatedData = $validator->validated();
+        $role = 2;
+        $token_type = 'user';
+
+        if ($validatedData['role'] == 1) {
+            $role = 1;
+            $token_type = 'admin';
+        } else {
+            $role = 2;
+            $token_type = 'user';
         }
-    
-        $validatedData=$validator->validated();
-        if( $validatedData['role'] == 1){
-            $user = User::create([
-                'full_name' => $validatedData['full_name'],
-                'username' => $validatedData['username'],
-                'password' => Hash::make($validatedData['password']),
-                'role' => 1,
-            ]);
-    
-            $token = $user->createToken('auth_token', ['admin'])->plainTextToken;
-    
-            return response()->json([
-                'access_token' => $token,
-                'token_type' => 'admin',
-            ]);
-        }else{
-            $user = User::create([
-                'full_name' => $validatedData['full_name'],
-                'username' => $validatedData['username'],
-                'password' => Hash::make($validatedData['password']),
-                'role' => 2,
-            ]);
-    
-            $token = $user->createToken('auth_token', ['user'])->plainTextToken;
-    
-            return response()->json([
-                'access_token' => $token,
-                'token_type' => 'user',
-            ]);
-        }
-        
+
+        $user = User::create([
+            'full_name' => $validatedData['full_name'],
+            'username' => $validatedData['username'],
+            'password' => Hash::make($validatedData['password']),
+            'role' => $role,
+        ]);
+
+        $token = $user->createToken('auth_token', [$token_type])->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => $token_type,
+        ]);
     }
-    
+
     public function login(Request $request)
     {
         if (!Auth::attempt($request->only('username', 'password'))) {
@@ -80,20 +64,18 @@ class AuthController extends Controller
 
         $user = User::where('username', $request['username'])->firstOrFail();
 
-        
-        if($user->role == 1){
-            $token = $user->createToken('auth_token', ['admin'])->plainTextToken;
-            return response()->json([
-                'access_token' => $token,
-                'token_type' => 'admin',
-            ]);
-        }else{
-            $token = $user->createToken('auth_token', ['user'])->plainTextToken;
-            return response()->json([
-                'access_token' => $token,
-                'token_type' => 'user',
-            ]);
+
+        if ($user->role == 1) {
+            $token_type = 'admin';
+        } else {
+            $token_type = 'user';
         }
-        
+
+        $token = $user->createToken('auth_token', [$token_type])->plainTextToken;
+
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => $token_type,
+        ]);
     }
 }

@@ -34,12 +34,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    /*protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];*/
+    public static function getValidationRules($id=null):array{
+        return [
+            'full_name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'username', 'max:255', 'unique:users'. ($id ? ",id,$id" : '')],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ];
+    }
 }

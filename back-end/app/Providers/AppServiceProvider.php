@@ -14,6 +14,14 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+        $this->app->bind(
+            'App\Interfaces\ArtistRepositoryInterface', 
+            'App\Repositories\ArtistRepository'
+        );
+        $this->app->bind(
+            'App\Interfaces\AlbumRepositoryInterface', 
+            'App\Repositories\AlbumRepository'
+        );
     }
 
     /**

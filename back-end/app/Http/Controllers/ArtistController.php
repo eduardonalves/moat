@@ -4,46 +4,44 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Library\ApiHelpers;
-use App\Models\Album;
-use App\Models\Artist;
-use App\Models\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Str;
-
+use App\Services\ArtistService;
+use phpDocumentor\Reflection\Types\This;
 
 class ArtistController extends Controller
 {
     use ApiHelpers;
+
+    public function __construct(ArtistService $artistService)
+    {
+        $this->artistService = $artistService;
+    }
+
     public function list(Request $request): JsonResponse
     {
+
         $user = $request->user();
 
         if ($this->isAdmin($user) || $this->isUser($user)) {
-            //$artist = Artist::all();
-            //return $this->onSuccess($artist, 'Artist Retrieved');
-            $artist = Artist::with('albums')->get();
-            return response()->json($artist,200);
+
+            $artist = $this->artistService->all();
+
+            return response()->json($artist, 200);
         }
 
         return $this->onError(401, 'Unauthorized Access');
     }
+
     public function view(Request $request, $id): JsonResponse
     {
         $user = $request->user();
+
         if ($this->isAdmin($user) || $this->isUser($user)) {
-            
-            $artist = Artist::with('albums')->get()->where('id', $id)->first();
-            return response()->json($artist,200);
-            //$post = DB::table('artists')->where('id', $id)->first();
-            /*if (!empty($post)) {
-                return $this->onSuccess($post, 'Artist Retrieved');
-            }*/
-            return $this->onError(404, 'Artist Not Found');
+
+            $artist = $this->artistService->find($id);
+
+            return response()->json($artist, 200);
         }
         return $this->onError(401, 'Unauthorized Access');
     }
-
 }
